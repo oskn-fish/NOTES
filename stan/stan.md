@@ -3,9 +3,20 @@ stan codeは次のブロックに分けられる
 - `data`
 - `parameters`
 - `model`
-
+- `generated quantities`
+## data・parameters
 `data`，`parameters`は各変数の属性を明示的に宣言するために必須．  
+
+## model
 `model`にて事後分布を定義して，MCMCサンプルに用いる．
+
+## generated quantities
+`generated quantities`はパラメータのサンプリングには使わない．サンプルした値を使って何らかの値を取得すると気に使う．例えば，事後予測分布を取得できる．  
+事後予測分布は，
+1. モデルパラメータをサンプリングすることによりモデルをサンプリングし，
+2. そこからさらにデータをサンプリングする．
+
+このように，モデルパラメータのサンプルから直接計算できる量を`generated quantities`を用いてサンプリング剃ることができる．
 
 
 
@@ -40,4 +51,5 @@ Stan内部では事後分布を対数を取って利用しているので，
 
 
 # 参考文献
-[Stan - 高速MCMCでパラメータ推定](https://heavywatal.github.io/rstats/stan.html)
+[Stan - 高速MCMCでパラメータ推定](https://heavywatal.github.io/rstats/stan.html)  
+[data, parameters, modelなどのブロックの意味と使い方](https://stats.biopapyrus.jp/bayesian-statistics/stan/stan-block.html)
