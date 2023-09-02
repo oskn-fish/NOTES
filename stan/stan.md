@@ -1,4 +1,22 @@
-# stan codeの概要
+# 使い方
+```python
+import stan
+import matplotlib.pyplot as plt
+import arviz as az
+# jupyterで使うときは必要
+import nest_asyncio
+nest_asyncio.apply()
+
+posterior = stan.build(stan_code, data=data, random_seed=1)
+fit = posterior.sample(num_chains=4, num_samples=1000)
+df = fit.to_frame()
+
+az.plot_trace(fit)
+plt.show()
+```
+
+
+# stan code のブロック
 stan codeは次のブロックに分けられる
 - `data`
 - `parameters`
@@ -18,7 +36,13 @@ stan codeは次のブロックに分けられる
 
 このように，モデルパラメータのサンプルから直接計算できる量を`generated quantities`を用いてサンプリング剃ることができる．
 
+# 型（配列・ベクトル・行列）
+`vector`，`matrix`は数学的にvector，matrixなので行列演算などが定義されているところがarrayと違う．
+## array
+`real x[5]`のように定義．
 
+## vector
+`vector[10] v`のように定義．
 
 
 # targetとはなにか
@@ -52,4 +76,5 @@ Stan内部では事後分布を対数を取って利用しているので，
 
 # 参考文献
 [Stan - 高速MCMCでパラメータ推定](https://heavywatal.github.io/rstats/stan.html)  
-[data, parameters, modelなどのブロックの意味と使い方](https://stats.biopapyrus.jp/bayesian-statistics/stan/stan-block.html)
+[data, parameters, modelなどのブロックの意味と使い方](https://stats.biopapyrus.jp/bayesian-statistics/stan/stan-block.html)  
+[Stanのデータ型についてまとめてみた](https://qiita.com/hoxo_m/items/e4dab11fed062689eff2)
