@@ -3,8 +3,7 @@
 import stan
 import matplotlib.pyplot as plt
 import arviz as az
-# jupyterで使うときは必要
-import nest_asyncio
+import nest_asyncio # jupyterで使うときは必要
 nest_asyncio.apply()
 
 posterior = stan.build(stan_code, data=data, random_seed=1)
@@ -15,6 +14,15 @@ az.plot_trace(fit)
 plt.show()
 ```
 
+# サンプリング時にエラーが出るとき
+parameter宣言時の`lower, upper`に問題があることがある．
+
+# for文
+```
+for (i in 1:D)
+    do something;
+...
+```
 
 # stan code のブロック
 stan codeは次のブロックに分けられる
@@ -35,6 +43,14 @@ stan codeは次のブロックに分けられる
 2. そこからさらにデータをサンプリングする．
 
 このように，モデルパラメータのサンプルから直接計算できる量を`generated quantities`を用いてサンプリング剃ることができる．
+```stan
+generated quantities {
+    vector[c] pred_X
+    for (i in 1:c) {
+        pred_X = binomial(N, x)
+    }
+}
+```
 
 # 型（配列・ベクトル・行列）
 `vector`，`matrix`は数学的にvector，matrixなので行列演算などが定義されているところがarrayと違う．

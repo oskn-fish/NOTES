@@ -20,4 +20,3 @@ import gymnasium as gym
 gym.make("<environment name>", <argument>=<input argument>)
 ```
 
-# rllib
